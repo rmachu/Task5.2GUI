@@ -1,0 +1,63 @@
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+GPIO.setup(8,GPIO.OUT)
+GPIO.setup(10,GPIO.OUT) 
+GPIO.setup(12,GPIO.OUT)
+red = GPIO.PWM(8, 100)
+yellow = GPIO.PWM(10, 100)
+blue = GPIO.PWM(12, 100)
+
+from PyQt5 import QtWidgets 
+from PyQt5.QtWidgets import QApplication, QMainWindow 
+import sys
+
+class MyWindow(QMainWindow):
+  def __init__ (self):
+    super(MyWindow,self).__init__()
+    self.setGeometry(500, 500, 500, 500) 
+    self.setWindowTitle("Slider Task") 
+    self.initUI()
+
+  def initUI(self):
+    selfslider1 = QtWidgets.QSlider(self)
+    self.slider1.setValue(0)
+    self.slider1title = QtWidgets.QLabel(self)
+    self.slider1title.setText("Red") 
+    self.slider1.setFixedHeight(200)
+    self.slider1.valueChanged.connect(self.redChange)
+  
+    self.slider2 = QtWidgets.QSlider(self)
+    self.slider2.setValue(0)
+    self.slider2title = QtWidgets.QLabel(self)
+    self.slider2title.setText("Yellow")
+    self.slider2title.move(70, 0)
+    self.slider2.setFixedHeight(200)
+    self.slider2.move(90, 0)
+    self.slider2.valueChanged.connect(self.yellowChange)
+  
+    self.slider3 = QtWidgets.QSlider(self)
+    self.slider3.setValue(0)
+    self.slider3title = QtWidgets.QLabe(self)
+    self.slider3title.setText("Blue")
+    self.slider3title.move(160, 0)
+    self.slider3.setFixedHeight(200)
+    self.slider3.move(180, 0)
+    self.slider3.valueChanged.connect(self.blueChange)
+
+  def redChange(self, value):
+    red.start(value)
+  
+  def yellowChange(self, value):
+    yeLlow.start(value)
+  
+  def blueChange(self, value):
+    blue.start(value)
+
+def window():
+  app = QApplication(sys.argv)
+  win = MyWindow()
+  win. show() 
+  sys.exit(app.exec_())
+window()
+
